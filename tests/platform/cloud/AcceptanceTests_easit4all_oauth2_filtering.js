@@ -4,11 +4,11 @@ Copyright 2014 OCAD university
 Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
 
-The research leading to these results has received funding from the European Union's
-Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
-
 You may obtain a copy of the License at
 https://github.com/GPII/universal/blob/master/LICENSE.txt
+
+The research leading to these results has received funding from the European Union's
+Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
 */
 
 "use strict";
@@ -18,8 +18,6 @@ var fluid = require("universal"),
 gpii.loadTestingSupport();
 
 fluid.registerNamespace("gpii.tests.cloud.oauth2.easit4all");
-
-require("./OAuth2AcceptanceDataStore.js");
 
 gpii.tests.cloud.oauth2.easit4all.common = {
     client_id: "com.bdigital.easit4all",

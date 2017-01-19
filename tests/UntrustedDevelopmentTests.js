@@ -17,28 +17,28 @@
 "use strict";
 
 var fluid = require("infusion"),
-    path = require("path"),
-    configPath = path.resolve(__dirname, "../gpii/configs"),
     gpii = fluid.registerNamespace("gpii"),
-    $ = fluid.registerNamespace("jQuery"),
     kettle = fluid.registerNamespace("kettle");
 
 require("../index.js");
-require("./DevelopmentTestDefs.js");
+require("./shared/DevelopmentTestDefs.js");
 
 gpii.loadTestingSupport();
 
 fluid.registerNamespace("gpii.tests.untrusted.development");
 
-gpii.tests.untrusted.development.testDefs = [];
-
-fluid.each(gpii.tests.development.testDefs, function (testDef) {
-    gpii.tests.untrusted.development.testDefs.push($.extend(true, {}, testDef, {
+gpii.tests.untrusted.development.testDefs = fluid.transform(gpii.tests.development.testDefs, function (testDefIn) {
+    var testDef = fluid.extend(true, {}, testDefIn, {
         config: {
-            configName: "untrusted.development.all.local",
-            configPath: configPath
+            configName: "gpii.tests.acceptance.untrusted.development.config",
+            configPath: "%universal/tests/configs"
         }
-    }));
+    });
+
+    testDef.gradeNames.push("gpii.test.pouch.pouchTestCaseHolder");
+
+    testDef.sequence = gpii.test.pouch.addConstructFixturesToSequence(testDef.sequence);
+    return testDef;
 });
 
 kettle.test.bootstrapServer(gpii.tests.untrusted.development.testDefs);

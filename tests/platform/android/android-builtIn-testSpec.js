@@ -6,14 +6,12 @@ Copyright 2014 Emergya
 Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
 
-The research leading to these results has received funding from the European Union's
-Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
-
 You may obtain a copy of the License at
 https://github.com/GPII/universal/blob/master/LICENSE.txt
-*/
 
-/*global require*/
+The research leading to these results has received funding from the European Union's
+Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
+*/
 
 "use strict";
 var fluid = require("universal"),
@@ -25,7 +23,7 @@ fluid.registerNamespace("gpii.tests.android.builtIn");
 
 gpii.tests.android.builtIn = [
     {
-        name: "Testing os_android using Flat matchmaker",
+        name: "Testing os_android using default matchmaker",
         userToken: "os_android",
         settingsHandlers: {
             "gpii.androidSettings": {
@@ -60,7 +58,7 @@ gpii.tests.android.builtIn = [
         }
     },
     {
-        name: "Testing os_android_common using Flat matchmaker",
+        name: "Testing os_android_common using default matchmaker",
         userToken: "os_android_common",
         settingsHandlers: {
             "gpii.androidSettings": {
@@ -95,7 +93,7 @@ gpii.tests.android.builtIn = [
         }
     },
     {
-        name: "Testing os_gnome using Flat matchmaker",
+        name: "Testing os_gnome using default matchmaker",
         userToken: "os_gnome",
         settingsHandlers: {
             "gpii.androidPersistentConfiguration": {
@@ -108,7 +106,7 @@ gpii.tests.android.builtIn = [
         }
     },
     {
-        name: "Testing os_common using Flat matchmaker",
+        name: "Testing os_common using default matchmaker",
         userToken: "os_common",
         settingsHandlers: {
             "gpii.androidPersistentConfiguration": {
@@ -124,7 +122,7 @@ gpii.tests.android.builtIn = [
 
 module.exports = gpii.test.bootstrap({
     testDefs:  "gpii.tests.android.builtIn",
-    configName: "android-builtIn-config",
-    configPath: "configs"
+    configName: "gpii.tests.acceptance.android.builtIn.config",
+    configPath: "%universal/tests/platform/android/configs"
 }, ["gpii.test.integration.testCaseHolder.android"],
     module, require, __dirname);

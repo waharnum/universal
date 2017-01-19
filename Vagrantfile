@@ -25,10 +25,17 @@ ram = ENV["VM_RAM"] || 2048
 
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "inclusivedesign/fedora22"
+  config.vm.box = "inclusivedesign/fedora24"
 
   # Your working directory will be synced to /home/vagrant/sync in the VM.
   config.vm.synced_folder ".", "#{app_directory}"
+
+  # Mounts node_modules in /var/tmp to work around issues in the VirtualBox shared folders
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    sudo mkdir -p /var/tmp/#{app_name}/node_modules #{app_directory}/node_modules
+    sudo chown vagrant:vagrant -R /var/tmp/#{app_name}/node_modules #{app_directory}/node_modules
+    sudo mount -o bind /var/tmp/#{app_name}/node_modules #{app_directory}/node_modules
+  SHELL
 
   # List additional directories to sync to the VM in your "Vagrantfile.local" file
   # using the following format:
@@ -52,8 +59,8 @@ Vagrant.configure(2) do |config|
   config.vm.provider :virtualbox do |vm|
     vm.customize ["modifyvm", :id, "--memory", ram]
     vm.customize ["modifyvm", :id, "--cpus", cpus]
-    vm.customize ["modifyvm", :id, "--vram", "128"]
-    vm.customize ["modifyvm", :id, "--accelerate3d", "on"]
+    vm.customize ["modifyvm", :id, "--vram", "256"]
+    vm.customize ["modifyvm", :id, "--accelerate3d", "off"]
     vm.customize ["modifyvm", :id, "--audio", "null", "--audiocontroller", "ac97"]
     vm.customize ["modifyvm", :id, "--ioapic", "on"]
     vm.customize ["setextradata", "global", "GUI/SuppressMessages", "all"]

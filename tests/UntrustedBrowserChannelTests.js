@@ -8,35 +8,34 @@
  * compliance with this License.
  *
  * You may obtain a copy of the License at
- * https://github.com/GPII/kettle/LICENSE.txt
+ * https://github.com/GPII/universal/blob/master/LICENSE.txt
  */
 
 "use strict";
 
 var fluid = require("infusion"),
-    path = require("path"),
-    configPath = path.resolve(__dirname, "./configs"),
     gpii = fluid.registerNamespace("gpii"),
-    $ = fluid.registerNamespace("jQuery"),
     kettle = fluid.registerNamespace("kettle");
 
-require("../index.js");
+fluid.require("%universal");
 
 gpii.loadTestingSupport();
 
-require("../gpii/node_modules/flowManager/test/BrowserChannelTestDefs.js");
+fluid.require("%flowManager/test/shared/BrowserChannelTestDefs.js");
 
 fluid.registerNamespace("gpii.tests.untrusted.flowManager.browserChannel");
 
-gpii.tests.untrusted.flowManager.browserChannel.testDefs = [];
-
-fluid.each(gpii.tests.flowManager.browserChannel.testDefs, function (testDef) {
-    gpii.tests.untrusted.flowManager.browserChannel.testDefs.push($.extend(true, {}, testDef, {
+gpii.tests.untrusted.flowManager.browserChannel.testDefs = fluid.transform(gpii.tests.flowManager.browserChannel.testDefs, function (testDefIn) {
+    var testDef = fluid.extend(true, {}, testDefIn, {
+        gradeNames: ["gpii.test.pouch.pouchTestCaseHolder"],
         config: {
-            configName: "untrustedBrowserChannelTests",
-            configPath: configPath
+            configName: "gpii.tests.acceptance.untrusted.browserChannel.config",
+            configPath: "%universal/tests/configs"
         }
-    }));
+    });
+
+    testDef.sequence = gpii.test.pouch.addConstructFixturesToSequence(testDef.sequence);
+    return testDef;
 });
 
 kettle.test.bootstrapServer(gpii.tests.untrusted.flowManager.browserChannel.testDefs);

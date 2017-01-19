@@ -4,11 +4,11 @@ Copyright 2015 OCAD university
 Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
 
-The research leading to these results has received funding from the European Union's
-Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
-
 You may obtain a copy of the License at
 https://github.com/GPII/universal/blob/master/LICENSE.txt
+
+The research leading to these results has received funding from the European Union's
+Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
 */
 
 "use strict";
@@ -17,8 +17,6 @@ var fluid = require("universal");
 var gpii = fluid.registerNamespace("gpii");
 
 gpii.loadTestingSupport();
-
-require("./OAuth2AcceptanceDataStore.js");
 
 fluid.registerNamespace("gpii.tests.cloud.untrustedSettings");
 
@@ -50,8 +48,8 @@ gpii.tests.cloud.untrustedSettings.testDefs = [
         userToken: "os_gnome",
         authDecisions: [
             {
-                userId: 1,
-                clientId: 3,
+                gpiiToken: "os_gnome",
+                clientId: "client-3",
                 redirectUri: false,
                 accessToken: "os_gnome_magnifier_access_token",
                 selectedPreferences: { "increase-size.magnifier": true },
@@ -79,16 +77,16 @@ gpii.tests.cloud.untrustedSettings.testDefs = [
         userToken: "os_gnome",
         authDecisions: [
             {
-                userId: 1,
-                clientId: 3,
+                gpiiToken: "os_gnome",
+                clientId: "client-3",
                 redirectUri: false,
                 accessToken: "os_gnome_magnifier_access_token",
                 selectedPreferences: { "": true },
                 revoked: false
             },
             {
-                userId: 1,
-                clientId: 4,
+                gpiiToken: "os_gnome",
+                clientId: "client-4",
                 redirectUri: false,
                 accessToken: "os_gnome_desktop_access_token",
                 selectedPreferences: { "increase-size.appearance.text-size": true },
@@ -102,6 +100,7 @@ gpii.tests.cloud.untrustedSettings.testDefs = [
                         "org.gnome.desktop.a11y.magnifier": {
                             "active": true,
                             "settings": {
+                                "http://registry.gpii.net/common/volume": 0.5,
                                 "http://registry.gpii.net/common/fontSize": 9,
                                 "http://registry.gpii.net/common/cursorSize": 0.9,
                                 "http://registry.gpii.net/common/magnification": 1.5,
@@ -130,6 +129,7 @@ gpii.tests.cloud.untrustedSettings.testDefs = [
                         "org.gnome.desktop.a11y.magnifier": {
                             "active": true,
                             "settings": {
+                                "http://registry.gpii.net/common/volume": 0.5,
                                 "http://registry.gpii.net/common/fontSize": 9,
                                 "http://registry.gpii.net/common/cursorSize": 0.9,
                                 "http://registry.gpii.net/common/magnification": 1.5,
@@ -150,6 +150,7 @@ gpii.tests.cloud.untrustedSettings.testDefs = [
                         "org.gnome.desktop.interface": {
                             "active": true,
                             "settings": {
+                                "http://registry.gpii.net/common/volume": 0.5,
                                 "http://registry.gpii.net/common/fontSize": 9,
                                 "http://registry.gpii.net/common/cursorSize": 0.9,
                                 "http://registry.gpii.net/common/magnification": 1.5,
@@ -170,6 +171,7 @@ gpii.tests.cloud.untrustedSettings.testDefs = [
                         "org.alsa-project": {
                             "active": true,
                             "settings": {
+                                "http://registry.gpii.net/common/volume": 0.5,
                                 "http://registry.gpii.net/common/fontSize": 9,
                                 "http://registry.gpii.net/common/cursorSize": 0.9,
                                 "http://registry.gpii.net/common/magnification": 1.5,
@@ -195,7 +197,7 @@ gpii.tests.cloud.untrustedSettings.testDefs = [
 ];
 
 fluid.defaults("gpii.tests.cloud.untrustedSettingsRequests", {
-    gradeNames: ["fluid.eventedComponent", "autoInit"],
+    gradeNames: "fluid.component",
     components: {
         untrustedSettingsRequest: {
             type: "kettle.test.request.http",

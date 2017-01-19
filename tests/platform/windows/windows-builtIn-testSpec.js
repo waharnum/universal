@@ -1,5 +1,4 @@
 /*
-
 GPII Integration and Acceptance Testing
 
 Copyright 2014 Raising the Floor International
@@ -7,11 +6,11 @@ Copyright 2014 Raising the Floor International
 Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
 
-The research leading to these results has received funding from the European Union's
-Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
-
 You may obtain a copy of the License at
 https://github.com/GPII/universal/blob/master/LICENSE.txt
+
+The research leading to these results has received funding from the European Union's
+Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
 */
 
 
@@ -25,7 +24,7 @@ fluid.registerNamespace("gpii.tests.windows");
 
 gpii.tests.windows.builtIn = [
     {
-        name: "Testing os_win7 using Flat matchmaker",
+        name: "Testing os_win7 using default matchmaker",
         userToken: "os_win7",
         settingsHandlers: {
             "gpii.windows.spiSettingsHandler": {
@@ -48,6 +47,66 @@ gpii.tests.windows.builtIn = [
                                 "type": "BOOL"
                             }
                         }
+                    }, {
+                        "settings": {
+                            "MouseKeysOn": {
+                                "path": "pvParam.dwFlags.MKF_MOUSEKEYSON",
+                                "value": true
+                            },
+                            "MaxSpeed": {
+                                "path": "pvParam.iMaxSpeed",
+                                "value": 100
+                            },
+                            "Acceleration": {
+                                "path": "pvParam.iTimeToMaxSpeed",
+                                "value": 1000
+                            }
+                        },
+                        "options": {
+                            "getAction": "SPI_GETMOUSEKEYS",
+                            "setAction": "SPI_SETMOUSEKEYS",
+                            "uiParam": "struct_size",
+                            "pvParam": {
+                                "type": "struct",
+                                "name": "MOUSEKEYS"
+                            }
+                        }
+                    }, {
+                        "settings": {
+                            "StickyKeysOn": {
+                                "path": "pvParam.dwFlags.SKF_STICKYKEYSON",
+                                "value": true
+                            }
+                        },
+                        "options": {
+                            "getAction": "SPI_GETSTICKYKEYS",
+                            "setAction": "SPI_SETSTICKYKEYS",
+                            "uiParam": "struct_size",
+                            "pvParam": {
+                                "type": "struct",
+                                "name": "STICKYKEYS"
+                            }
+                        }
+                    }, {
+                        "settings": {
+                            "FilterKeysEnable": {
+                                "path": "pvParam.dwFlags.FKF_FILTERKEYSON",
+                                "value": true
+                            },
+                            "BounceKeysInterval": {
+                                "path": "pvParam.iBounceMSec",
+                                "value": 1000
+                            }
+                        },
+                        "options": {
+                            "getAction": "SPI_GETFILTERKEYS",
+                            "setAction": "SPI_SETFILTERKEYS",
+                            "uiParam": "struct_size",
+                            "pvParam": {
+                                "type": "struct",
+                                "name": "FILTERKEYS"
+                            }
+                        }
                     }, { // high contrast settings
                         "settings": {
                             "HighContrastOn": {
@@ -125,6 +184,16 @@ gpii.tests.windows.builtIn = [
                         }
                     }
                 }]
+            },
+            "gpii.windows.displaySettingsHandler": {
+                "some.app.id": [{
+                    "settings": {
+                        "screen-resolution": {
+                            "width": 800,
+                            "height": 600
+                        }
+                    }
+                }]
             }
         },
         processes: [
@@ -135,7 +204,7 @@ gpii.tests.windows.builtIn = [
             }
         ]
     }, {
-        name: "Testing os_common using Flat matchmaker",
+        name: "Testing os_common using default matchmaker",
         userToken: "os_common",
         settingsHandlers: {
             "gpii.windows.spiSettingsHandler": {
@@ -158,6 +227,58 @@ gpii.tests.windows.builtIn = [
                                 "type": "BOOL"
                             }
                         }
+                    }, {
+                        "settings": {
+                            "MouseKeysOn": {
+                                "path": "pvParam.dwFlags.MKF_MOUSEKEYSON",
+                                "value": true
+                            }
+                        },
+                        "options": {
+                            "getAction": "SPI_GETMOUSEKEYS",
+                            "setAction": "SPI_SETMOUSEKEYS",
+                            "uiParam": "struct_size",
+                            "pvParam": {
+                                "type": "struct",
+                                "name": "MOUSEKEYS"
+                            }
+                        }
+                    }, {
+                        "settings": {
+                            "StickyKeysOn": {
+                                "path": "pvParam.dwFlags.SKF_STICKYKEYSON",
+                                "value": true
+                            }
+                        },
+                        "options": {
+                            "getAction": "SPI_GETSTICKYKEYS",
+                            "setAction": "SPI_SETSTICKYKEYS",
+                            "uiParam": "struct_size",
+                            "pvParam": {
+                                "type": "struct",
+                                "name": "STICKYKEYS"
+                            }
+                        }
+                    }, {
+                        "settings": {
+                            "FilterKeysEnable": {
+                                "path": "pvParam.dwFlags.FKF_FILTERKEYSON",
+                                "value": true
+                            },
+                            "BounceKeysInterval": {
+                                "path": "pvParam.iBounceMSec",
+                                "value": 1000
+                            }
+                        },
+                        "options": {
+                            "getAction": "SPI_GETFILTERKEYS",
+                            "setAction": "SPI_SETFILTERKEYS",
+                            "uiParam": "struct_size",
+                            "pvParam": {
+                                "type": "struct",
+                                "name": "FILTERKEYS"
+                            }
+                        }
                     }, { // high contrast settings
                         "settings": {
                             "HighContrastOn": {
@@ -245,7 +366,7 @@ gpii.tests.windows.builtIn = [
             }
         ]
     }, {
-        name: "Testing os_gnome using Flat matchmaker",
+        name: "Testing os_gnome using default matchmaker",
         userToken: "os_gnome",
         settingsHandlers: {
             "gpii.windows.registrySettingsHandler": {
@@ -316,7 +437,7 @@ gpii.tests.windows.builtIn = [
 
 module.exports = gpii.test.bootstrap({
     testDefs:  "gpii.tests.windows.builtIn",
-    configName: "windows-builtIn-config",
-    configPath: "configs"
+    configName: "gpii.tests.acceptance.windows.builtIn.config",
+    configPath: "%universal/tests/platform/windows/configs"
 }, ["gpii.test.integration.testCaseHolder.windows"],
     module, require, __dirname);
