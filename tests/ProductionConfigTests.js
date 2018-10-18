@@ -3,12 +3,13 @@ GPII Production Config tests
 
 Requirements:
 * an internet connection
-* a preferences server running at `http://preferences.gpii.net` containing at least the MikelVargas
-NP set
+* a cloud based flow manager running at `http://flowmanager.gpii.net` containing at least the MikelVargas
+preferences
 
 ---
 
 Copyright 2015 Raising the Floor - International
+Copyright 2018 OCAD University
 
 Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
@@ -21,89 +22,65 @@ https://github.com/GPII/universal/blob/master/LICENSE.txt
 */
 
 "use strict";
-var fluid = require("universal"),
-    gpii = fluid.registerNamespace("gpii");
 
-gpii.loadTestingSupport();
+var fluid = require("infusion"),
+    gpii = fluid.registerNamespace("gpii"),
+    kettle = fluid.registerNamespace("kettle");
 
 fluid.registerNamespace("gpii.tests.productionConfigTesting");
 
-/*
- * ================================
- * gpii.config.trusted-flowmanager.production
- * ================================
- */
-
-gpii.tests.productionConfigTesting = [
-    {
-        name: "Production config test with os_common using Flat matchmaker",
-        userToken: "MikelVargas",
-        settingsHandlers: {
-            "gpii.gsettings": {
-                "some.app.id": [{
-                    "settings": {
-                        "stickykeys-enable": true,
-                        "slowkeys-enable": true,
-                        "slowkeys-delay": 400,
-                        "bouncekeys-enable": true,
-                        "bouncekeys-delay": 200,
-                        "mousekeys-enable": true,
-                        "mousekeys-init-delay": 120,
-                        "mousekeys-max-speed": 850,
-                        "mousekeys-accel-time": 800
-                    },
-                    "options": {
-                        "schema": "org.gnome.desktop.a11y.keyboard"
-                    }
-                }]
-            }
-        },
-        processes: [],
-        deviceReporters: {
-            "gpii.packageKit.find": {
-                "expectInstalled": ["gsettings-desktop-schemas"]
-            }
-        }
-    }
-];
-
-gpii.test.bootstrap({
-    testDefs:  "gpii.tests.productionConfigTesting",
-    configName: "gpii.config.trusted-flowmanager.production",
-    configPath: "%universal/gpii/configs"
-}, ["gpii.test.integration.deviceReporterAware.linux", "gpii.test.integration.testCaseHolder.linux"],
-    module, require, __dirname);
+fluid.require("%gpii-universal");
 
 /*
- * ================================
- * Testing of cloudBased.production
- * ================================
+ * ========================================================================
+ * Testing of untrusted local config with the live cloud based flow manager
+ * ========================================================================
  */
 
-var testDefs = [
-    {
-        name: "Example acceptance test with 'cloudbased' flow manager using gnome keyboard settings",
-        userToken: "MikelVargas",
-        OSid: "linux",
-        solutionId: "org.gnome.desktop.a11y.keyboard",
+require("./shared/DevelopmentTestDefs.js");
+
+gpii.loadTestingSupport();
+
+gpii.tests.productionConfigTesting.testDefs = fluid.transform(gpii.tests.development.testDefs, function (testDefIn) {
+    var testDef = fluid.extend(true, {}, testDefIn, {
         config: {
-            configName: "gpii.tests.acceptance.cloudBased.flowManager.production",
-            configPath: "%universal/tests/configs"
-        },
-        expected: {
-            "org.gnome.desktop.a11y.keyboard": {
-                "slowkeys-delay": 400,
-                "slowkeys-enable": true,
-                "bouncekeys-delay": 200,
-                "mousekeys-enable": true,
-                "stickykeys-enable": true,
-                "bouncekeys-enable": true,
-                "mousekeys-max-speed": 850,
-                "mousekeys-init-delay": 120,
-                "mousekeys-accel-time": 800
+            configName: "gpii.tests.productionConfigTests.config",
+            configPath: "%gpii-universal/tests/configs"
+        }
+    });
+    gpii.test.unshift(testDef.sequence, [
+        {
+            event: "{kettle.test.serverEnvironment}.events.onAllReady",
+            listener: "fluid.identity"
+        }
+    ]);
+    return testDef;
+});
+
+// Override the original "kettle.test.testDefToServerEnvironment" function provided by kettle library to boil a new
+// aggregate event "onAllReady" that listens to both "onServerReady" and "{flowManager}.events.noUserLoggedIn" events
+kettle.test.testDefToServerEnvironment = function (testDef) {
+    var configurationName = testDef.configType || kettle.config.createDefaults(testDef.config);
+    return {
+        type: "kettle.test.serverEnvironment",
+        options: {
+            configurationName: configurationName,
+            components: {
+                tests: {
+                    options: kettle.test.testDefToCaseHolder(configurationName, testDef)
+                }
+            },
+            events: {
+                resetAtStartSuccess: null,
+                onAllReady: {
+                    events: {
+                        "onServerReady": "onServerReady",
+                        "resetAtStartSuccess": "resetAtStartSuccess"
+                    }
+                }
             }
         }
-    }
-];
+    };
+};
 
-gpii.test.cloudBased.bootstrap(testDefs, __dirname);
+kettle.test.bootstrapServer(gpii.tests.productionConfigTesting.testDefs);

@@ -13,15 +13,18 @@ You may obtain a copy of the License at
 https://github.com/GPII/universal/blob/master/LICENSE.txt
 */
 
-
 "use strict";
 
 var fluid = require("infusion"),
     gpii = fluid.registerNamespace("gpii");
 
-fluid.registerNamespace("gpii.test.integration");
+fluid.contextAware.makeChecks({
+    "gpii.contexts.test.integration": {
+        value: true
+    }
+});
 
-require("../index.js");
+fluid.require("%gpii-universal");
 
 gpii.loadTestingSupport();
 

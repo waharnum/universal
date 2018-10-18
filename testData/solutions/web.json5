@@ -11,9 +11,17 @@
         "settingsHandlers": {
             "myconf": {
                 "type": "gpii.settingsHandlers.noSettings",
-                "capabilities": [],
+                "supportedSettings": {
+                    "screenReaderTTS/enabled": {},
+                    "fontSize": {},
+                    "magnifierEnabled": {},
+                    "magnification": {},
+                    "highContrast/enabled": {},
+                    "highContrastTheme": {},
+                    "invertColours": {}
+                },
                 "capabilitiesTransformations": {
-                    "screenReaderTTSEnabled": "http://registry\\.gpii\\.net/common/screenReaderTTSEnabled",
+                    "screenReaderTTS/enabled": "http://registry\\.gpii\\.net/common/screenReaderTTS/enabled",
                     "fontSize": {
                         "transform":{
                             "type": "fluid.transforms.quantize",
@@ -33,7 +41,7 @@
                             ]
                         }
                     },
-                    "magnifierEnabled": "http://registry\\.gpii\\.net/common/magnifierEnabled",
+                    "magnifierEnabled": "http://registry\\.gpii\\.net/common/magnification/enabled",
                     "magnification": {
                         "transform": {
                             "type": "fluid.transforms.quantize",
@@ -53,7 +61,7 @@
                             ]
                         }
                     },
-                    "highContrastEnabled": "http://registry\\.gpii\\.net/common/highContrastEnabled",
+                    "highContrast/enabled": "http://registry\\.gpii\\.net/common/highContrast/enabled",
                     "highContrastTheme": "http://registry\\.gpii\\.net/common/highContrastTheme",
                     "invertColours": "http://registry\\.gpii\\.net/common/invertColours"
                 },
@@ -73,7 +81,20 @@
         "settingsHandlers": {
             "myconf": {
                 "type": "gpii.settingsHandlers.noSettings",
-                "capabilities": [],
+                "supportedSettings": {
+                    "fontSize": {},
+                    "fontFaceFontName": {},
+                    "foregroundColor": {},
+                    "backgroundColor": {},
+                    "lineSpacing": {},
+                    "inputsLarger": {},
+                    "toc": {},
+                    "links": {},
+                    "layout": {},
+                    "invertImages": {},
+                    "tracking": {},
+                    "magnification": {}
+                },
                 "capabilitiesTransformations": {
                     "fontSize": {
                         "transform":{
@@ -85,7 +106,7 @@
                     "fontFaceFontName": {
                         "transform":{
                             "type": "fluid.transforms.valueMapper",
-                            "defaultInputPath": "http://registry\\.gpii\\.net/provisional-common/fontName",
+                            "defaultInputPath": "http://registry\\.gpii\\.net/common/fontName",
                             "match": {
                                 "times": "Times New Roman",
                                 "comic": "Comic Sans",
@@ -100,7 +121,7 @@
                     "foregroundColor": {
                         "transform": {
                             "type": "fluid.transforms.valueMapper",
-                            "defaultInputPath": "http://registry\\.gpii\\.net/provisional-common/foregroundColor",
+                            "defaultInputPath": "http://registry\\.gpii\\.net/common/foregroundColor",
                             "match": {
                                 "black": "Black",
                                 "yellow": "Yellow",
@@ -114,7 +135,7 @@
                     "backgroundColor": {
                         "transform":{
                             "type": "fluid.transforms.valueMapper",
-                            "defaultInputPath": "http://registry\\.gpii\\.net/provisional-common/backgroundColor",
+                            "defaultInputPath": "http://registry\\.gpii\\.net/common/backgroundColor",
                             "defaultInputValue": "default",
                             "match": {
                                 "black": {
@@ -132,13 +153,13 @@
                             }
                         }
                     },
-                    "lineSpacing": "http://registry\\.gpii\\.net/provisional-common/lineSpacing",
-                    "inputsLarger": "http://registry\\.gpii\\.net/provisional-common/inputsLarger",
-                    "toc": "http://registry\\.gpii\\.net/provisional-common/tableOfContents",
-                    "links": "http://registry\\.gpii\\.net/provisional-common/emphasizeLinks",
-                    "layout": "http://registry\\.gpii\\.net/provisional-common/simplifyLayout",
+                    "lineSpacing": "http://registry\\.gpii\\.net/common/lineSpacing",
+                    "inputsLarger": "http://registry\\.gpii\\.net/common/inputsLarger",
+                    "toc": "http://registry\\.gpii\\.net/common/tableOfContents",
+                    "links": "http://registry\\.gpii\\.net/common/emphasizeLinks",
+                    "layout": "http://registry\\.gpii\\.net/common/simplifyLayout",
                     "invertImages": "http://registry\\.gpii\\.net/common/invertColours",
-                    "tracking": "http://registry\\.gpii\\.net/provisional-common/magnifierFollows",
+                    "tracking": "http://registry\\.gpii\\.net/common/magnifierFollows",
                     "magnification": {
                         "transform": {
                             "type": "fluid.transforms.quantize",
@@ -167,12 +188,12 @@
         "settingsHandlers": {
             "conf": {
                 "type": "gpii.settingsHandlers.noSettings",
-                "capabilities": [
-                    "http://registry\\.gpii\\.net/common/highContrastTheme",
-                    "http://registry\\.gpii\\.net/common/fontSize",
-                    "http://registry\\.gpii\\.net/common/volume",
-                    "http://registry\\.gpii\\.net/common/language"
-                ],
+                "supportedSettings": {
+                    "transform": {},
+                    "volume": {},
+                    "language": {},
+                    "theme": {}
+                },
                 "capabilitiesTransformations": {
                     "theme": {
                         "transform": {
@@ -257,11 +278,12 @@
         "settingsHandlers": {
             "conf": {
                 "type": "gpii.settingsHandlers.noSettings",
-                "capabilities": [
-                    "http://registry\\.gpii\\.net/common/highContrastTheme",
-                    "http://registry\\.gpii\\.net/common/fontSize",
-                    "http://registry\\.gpii\\.net/common/volume"
-                ],
+                "supportedSettings": {
+                    "fontSize": {},
+                    "language": {},
+                    "highContrastTheme": {},
+                    "volume": {}
+                },
                 "capabilitiesTransformations": {
                     "fontSize": {
                         "transform": {
@@ -324,7 +346,14 @@
         "settingsHandlers": {
             "conf": {
                 "type": "gpii.settingsHandlers.noSettings",
-                "capabilities": [],
+                "supportedSettings": {
+                    "access_commonprefs_speechrate": {},
+                    "access_commonprefs_speechpitch": {},
+                    "access_commonprefs_editingkeyboardecho": {},
+                    "access_commonprefs_punctuation": {},
+                    "access_commonprefs_capitalization": {},
+                    "access_commonprefs_c4a_enable_braille": {}
+                },
                 "capabilitiesTransformations": {
                     "access_commonprefs_speechrate": {
                         "transform": {
@@ -384,16 +413,20 @@
         "settingsHandlers": {
             "conf": {
                 "type": "gpii.settingsHandlers.noSettings",
-                "capabilities": [
-                    "http://registry\\.gpii\\.net/common/highContrastTheme",
-                    "http://registry\\.gpii\\.net/common/fontSize"
-                ],
+                "supportedSettings": {
+                    "language": {},
+                    "contrastTheme": {},
+                    "fontSize": {},
+                    "timeOut": {},
+                    "buttonSize": {},
+                    "fontFace": {}
+                },
                 "capabilitiesTransformations": {
                     "language": "http://registry\\.gpii\\.net/common/language",
                     "contrastTheme": {
                         "transform": {
                             "type": "fluid.transforms.condition",
-                            "conditionPath": "http://registry\\.gpii\\.net/common/highContrastEnabled",
+                            "conditionPath": "http://registry\\.gpii\\.net/common/highContrast/enabled",
                             "true": {
                                 "transform": {
                                     "type": "fluid.transforms.valueMapper",
@@ -452,7 +485,23 @@
         "settingsHandlers": {
             "conf": {
                 "type": "gpii.settingsHandlers.noSettings",
-                "capabilities": [],
+                "supportedSettings": {
+                    "language": {},
+                    "textSize": {},
+                    "toc": {},
+                    "links": {},
+                    "contrastTheme": {},
+                    "signLanguageEnabled": {},
+                    "signLanguage": {},
+                    "interpreterType": {},
+                    "interpreterName": {},
+                    "pictogramsEnabled": {},
+                    "simplifiedUiEnabled": {},
+                    "textStyle": {},
+                    "lineSpacing": {},
+                    "inputsLarger": {}
+
+                },
                 "capabilitiesTransformations": {
                     "language": "http://registry\\.gpii\\.net/common/language",
                     "textSize": {
@@ -485,7 +534,7 @@
                     "contrastTheme": {
                         "transform": {
                             "type": "fluid.transforms.condition",
-                            "conditionPath": "http://registry\\.gpii\\.net/common/highContrastEnabled",
+                            "conditionPath": "http://registry\\.gpii\\.net/common/highContrast/enabled",
                             "true": {
                                 "transform": {
                                     "type": "fluid.transforms.valueMapper",
@@ -500,7 +549,7 @@
                             }
                         }
                     },
-                    "signLanguageEnabled": "http://registry\\.gpii\\.net/common/signLanguageEnabled",
+                    "signLanguageEnabled": "http://registry\\.gpii\\.net/common/signLanguage/enabled",
                     "signLanguage": {
                         "transform": {
                             "type": "fluid.transforms.valueMapper",
@@ -525,12 +574,11 @@
                             }
                         }
                     },
-                    "pictogramsEnabled": "http://registry\\.gpii\\.net/common/pictogramsEnabled",
-                    "simplifiedUiEnabled": "http://registry\\.gpii\\.net/common/simplifiedUiEnabled"
+                    "pictogramsEnabled": "http://registry\\.gpii\\.net/common/pictograms/enabled",
+                    "simplifiedUiEnabled": "http://registry\\.gpii\\.net/common/simplifiedUi/enabled"
                 },
                 "inverseCapabilitiesTransformations": {}
             }
         }
     }
 }
-

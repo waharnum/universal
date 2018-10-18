@@ -14,10 +14,9 @@
 "use strict";
 
 var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii"),
-    kettle = fluid.registerNamespace("kettle");
+    gpii = fluid.registerNamespace("gpii");
 
-fluid.require("%universal");
+fluid.require("%gpii-universal");
 
 gpii.loadTestingSupport();
 
@@ -27,15 +26,12 @@ fluid.registerNamespace("gpii.tests.untrusted.flowManager.browserChannel");
 
 gpii.tests.untrusted.flowManager.browserChannel.testDefs = fluid.transform(gpii.tests.flowManager.browserChannel.testDefs, function (testDefIn) {
     var testDef = fluid.extend(true, {}, testDefIn, {
-        gradeNames: ["gpii.test.pouch.pouchTestCaseHolder"],
         config: {
             configName: "gpii.tests.acceptance.untrusted.browserChannel.config",
-            configPath: "%universal/tests/configs"
+            configPath: "%gpii-universal/tests/configs"
         }
     });
-
-    testDef.sequence = gpii.test.pouch.addConstructFixturesToSequence(testDef.sequence);
     return testDef;
 });
 
-kettle.test.bootstrapServer(gpii.tests.untrusted.flowManager.browserChannel.testDefs);
+gpii.test.bootstrapServer(gpii.tests.untrusted.flowManager.browserChannel.testDefs);

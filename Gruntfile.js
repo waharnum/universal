@@ -12,66 +12,20 @@ Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.
 You may obtain a copy of the License at
 https://github.com/GPII/universal/blob/master/LICENSE.txt
 */
-
 "use strict";
-
 module.exports = function (grunt) {
-
     grunt.initConfig({
-        eslint: {
-            src: ["gpii/**/*.js", "tests/**/*.js", "examples/**/*.js", "*.js"]
-        },
-        jsonlint: {
-            src: ["gpii/**/*.json", "tests/**/*.json", "testData/**/*.json", "*.json"]
-        },
-        json5lint: {
-            options: {
-                enableJSON5: true
-            },
-            src: ["gpii/**/*.json5", "tests/**/*.json5", "testData/**/*.json5", "*.json5"]
-        },
-        shell: {
-            options: {
-                stdout: true,
-                stderr: true,
-                failOnError: true,
-                execOptions: {
-                    maxBuffer: Infinity
-                }
-            },
-            runBrowserTests: {
-                command: "vagrant ssh -c 'cd /home/vagrant/sync/node_modules/universal; DISPLAY=:0 testem ci --file tests/web/testem_qi.json'"
-            },
-            runNodeTests: {
-                command: "vagrant ssh -c 'cd /home/vagrant/sync/node_modules/universal; npm test'"
-            },
-            runNodeProductionTests: {
-                command: "vagrant ssh -c 'cd /home/vagrant/sync/node_modules/universal; node tests/ProductionConfigTests.js'"
+        lintAll: {
+            sources: {
+                md:    [ "./*.md","./documentation/*.md", "./examples/**/*.md"],
+                js:    ["!./browserify/**/*.js", "./gpii/**/*.js", "./tests/**/*.js", "./examples/**/*.js", "*.js"],
+                json:  ["./gpii/**/*.json", "./tests/**/*.json", "./testData/**/*.json", "./*.json"],
+                json5: ["./gpii/**/*.json5", "./tests/**/*.json5", "./testData/**/*.json5", "./*.json5"],
+                other: ["./.*"]
             }
         }
     });
 
-    grunt.loadNpmTasks("fluid-grunt-eslint");
-    grunt.loadNpmTasks("grunt-jsonlint");
-    grunt.loadNpmTasks("fluid-grunt-json5lint");
-    grunt.loadNpmTasks("grunt-shell");
-
-    grunt.registerTask("browser-tests", "Run browser tests in a VM", function () {
-        grunt.task.run("shell:runBrowserTests");
-    });
-
-    grunt.registerTask("node-tests", "Run Node tests in a VM", function () {
-        grunt.task.run("shell:runNodeTests");
-    });
-
-    grunt.registerTask("node-production-tests", "Run Node production tests in a VM", function () {
-        grunt.task.run("shell:runNodeProductionTests");
-    });
-
-    grunt.registerTask("tests", "Run browser and node tests in a VM", function () {
-        grunt.task.run("shell:runBrowserTests");
-        grunt.task.run("shell:runNodeTests");
-    });
-
-    grunt.registerTask("lint", "Apply jshint, jsonlint and json5lint", ["eslint", "jsonlint", "json5lint"]);
+    grunt.loadNpmTasks("gpii-grunt-lint-all");
+    grunt.registerTask("lint", "Perform all standard lint checks.", ["lint-all"]);
 };
